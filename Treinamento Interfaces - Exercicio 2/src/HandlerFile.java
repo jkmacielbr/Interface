@@ -1,5 +1,3 @@
-import interfaces.FileDatabase;
-import interfaces.ImageFileDatabase;
 import model.MFile;
 import model.MFileAnnotationTypeEnum;
 import orchestrator.FileOrchestrator;
