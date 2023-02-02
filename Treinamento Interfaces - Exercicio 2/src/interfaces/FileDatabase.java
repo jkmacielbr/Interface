@@ -5,7 +5,7 @@ import model.MFileAnnotationTypeEnum;
 import java.io.IOException;
 
 public interface FileDatabase {
-    void saveFile(String directory, String content, MFileAnnotationTypeEnum type, String nameFile) throws IOException;
+    void saveFile(String directory, String content, MFileAnnotationTypeEnum type, String nameFile);
 
     void recoveryFile(String directory,String nameFile);
 

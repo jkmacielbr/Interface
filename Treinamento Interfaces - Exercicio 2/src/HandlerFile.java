@@ -14,6 +14,10 @@ public class HandlerFile extends FileOrchestrator {
             mFileList.add(mFile);
             saveAllListOfImagesFiles(mFileList);
 
+        } else if (mFile.getType().equals(MFileAnnotationTypeEnum.REMINDER) || mFile.getType().equals(MFileAnnotationTypeEnum.SIMPLE)
+                || mFile.getType().equals(MFileAnnotationTypeEnum.IMPORTANT)){
+            mFileList.add(mFile);
+            saveAllListOfFiles(mFileList);
         }
 
     }
