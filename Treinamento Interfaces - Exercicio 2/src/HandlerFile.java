@@ -7,7 +7,7 @@ import java.util.List;
 
 public class HandlerFile extends FileOrchestrator {
 
-    private List<MFile> mFileList = new ArrayList<>();
+    private List <MFile> mFileList = new ArrayList<>();
 
     public HandlerFile(MFile mFile) {
         if (mFile.getType().equals(MFileAnnotationTypeEnum.IMAGE)){
@@ -15,6 +15,7 @@ public class HandlerFile extends FileOrchestrator {
             saveAllListOfImagesFiles(mFileList);
 
         }
+
     }
 
     public HandlerFile(){
