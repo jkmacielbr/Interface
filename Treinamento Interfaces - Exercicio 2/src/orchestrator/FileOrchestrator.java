@@ -11,7 +11,6 @@ import java.io.*;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
 public class FileOrchestrator extends FolderOrchestrator implements ImageFileDatabase, FileDatabase {
     File file;
@@ -38,7 +37,6 @@ public class FileOrchestrator extends FolderOrchestrator implements ImageFileDat
             diretorio += "/image/";
 
             file = new File(diretorio);
-            System.out.println(diretorio);
 
             if (file.exists()) {
 
@@ -63,9 +61,7 @@ public class FileOrchestrator extends FolderOrchestrator implements ImageFileDat
 
     @Override
     public void saveFile(String directory, String content, MFileAnnotationTypeEnum type, String nameFile) {
-        String subdirectory;
         if (type.equals(MFileAnnotationTypeEnum.REMINDER)){
-            System.out.println("entrei no reminder");
             directory += "/reminder";
         }
         else if (type.equals(MFileAnnotationTypeEnum.IMPORTANT)) {
@@ -98,6 +94,7 @@ public class FileOrchestrator extends FolderOrchestrator implements ImageFileDat
         file = new File(directory + "/image");
         File afile[] = file.listFiles();
         int i = 0;
+        if(afile!= null){
         for (int j = afile.length; i < j; i++) {
             Arrays.sort(afile);
             File files = afile[i];
@@ -105,6 +102,7 @@ public class FileOrchestrator extends FolderOrchestrator implements ImageFileDat
 
 
         }
+        } else System.out.println("NOT FOUND DIRECTORY");
     }
 
     @Override
@@ -115,15 +113,6 @@ public class FileOrchestrator extends FolderOrchestrator implements ImageFileDat
             file.delete();
         } else System.out.println("NOT FOUND IMAGE");
 
-//        File [] aFile = file.listFiles();
-//        for (File listFile : aFile) {
-//            if (listFile.getName().equals(nameFile)) {
-//                listFile.delete();
-//                System.out.println("Deletada com sucesso");
-//            }
-//
-//
-//        }
     }
 
     @Override
@@ -133,13 +122,51 @@ public class FileOrchestrator extends FolderOrchestrator implements ImageFileDat
     }
 
     @Override
-    public void recoveryFile(String directory, String nameFile) {
+    public void recoveryFile(String directory, String nameFile, MFileAnnotationTypeEnum type) {
+
+        System.out.println("[1] REMINDER \t\t[2] IMPORTANT \t\t [3] SIMPLE");
+        int op = tc.nextInt();
+        if (op == 1) {
+            directory += "/reminder/";
+        } else if (op == 2) {
+            directory += "/important/";
+        } else if (op == 3) {
+            directory += "/";
+        }
+        else {
+            System.out.println("INVALID OPTION");
+
+        }
+        String path = directory+nameFile;
+        try (BufferedReader leitor = new BufferedReader(new FileReader(path))){
+            String lido = leitor.readLine();
+            while (lido != null) {
+                System.out.println(lido);
+                lido = leitor.readLine();
+            }
+
+        }catch (IOException e){
+            System.out.println("Error"+ e.getMessage());
+        }
+
+
 
 
     }
 
     @Override
-    public void removeFile(String directory, String nameFile) {
+    public void removeFile(String directory, String nameFile, MFileAnnotationTypeEnum type) {
+
+        if (type.equals(MFileAnnotationTypeEnum.REMINDER)){
+            directory += "/reminder/";
+        } else if (type.equals(MFileAnnotationTypeEnum.IMPORTANT)) {
+            directory += "/important/";
+
+        } else if (type.equals(MFileAnnotationTypeEnum.SIMPLE)) {
+            directory += "/";
+
+        } else System.out.println("TYPE NOT EXISTS");
+
         file = new File(directory + nameFile);
         if(file.exists()) {
             file.delete();
@@ -150,6 +177,31 @@ public class FileOrchestrator extends FolderOrchestrator implements ImageFileDat
 
     @Override
     public void listAllFiles(String directory) {
+        System.out.println("[1] REMINDER \t\t[2] IMPORTANT \t\t [3] SIMPLE");
+        int op = tc.nextInt();
+
+        if (op == 1) {
+            directory += "/reminder/";
+        } else if (op == 2) {
+            directory += "/important/";
+        } else if (op == 3) {
+            directory += "/";
+        }
+        else {
+            System.out.println("INVALID OPTION");
+            listAllFiles(directory);
+        }
+        file = new File(directory);
+        File [] aFile = file.listFiles();
+
+        if (aFile!= null){
+        for (File list: aFile) {
+            if(list.isFile()){
+                System.out.println(list.getName());
+            }
+
+        }
+        } else System.out.println("NOT FOUND FILES");
 
     }
 }

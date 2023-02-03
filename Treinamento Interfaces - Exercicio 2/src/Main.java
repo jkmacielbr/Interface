@@ -7,7 +7,8 @@ import java.util.Scanner;
 
 public class Main {
     static List<String> mFileLista = new ArrayList();
-    static String directory, nameFile, content, nameImage, type;
+    static String directory, nameFile, content, nameImage;
+    static MFileAnnotationTypeEnum type = null;
     static int op;
     static Scanner tc = new Scanner(System.in);
 
@@ -15,15 +16,12 @@ public class Main {
         screenMenu();
         op = tc.nextInt();
         do {
-
-
             tc.nextLine();
 
             switch (op) {
-                case 1 -> {
-                    folderManager();
+                case 1 -> folderManager();
 
-                }
+
                 case 2 -> {
                     screenImage();
                     imageManager();
@@ -80,19 +78,19 @@ public class Main {
 
     public static void folderManager() {
 
-        System.out.println("[1] CREATE FOLDER");
-        System.out.println("[2] DELETE FOLDER");
-        System.out.println("[3] FOLDER LIST");
-        System.out.println("[4] EXIT");
 
-        op = tc.nextInt();
+
         do {
+            System.out.println("[1] CREATE FOLDER");
+            System.out.println("[2] DELETE FOLDER");
+            System.out.println("[3] LIST FOLDER");
+            System.out.println("[4] EXIT");
+            op = tc.nextInt();
 
             if (op == 1) {
                 do {
 
                     System.out.println("DIRECTORY PATH");
-                    tc.nextLine();
                     directory = tc.nextLine();
                     screenDirectory();
                     op = tc.nextInt();
@@ -115,7 +113,7 @@ public class Main {
             } else if (op == 2) {
                 do {
                     System.out.println("[0] SAIR");
-                    System.out.println("[1] DELETE DIRECTORY");
+                    System.out.println("[1] DELETE FOLDER");
                     op = tc.nextInt();
                     if (op == 1) {
 
@@ -131,10 +129,11 @@ public class Main {
                 new HandlerFile().removeFolders(mFileLista);
 
             } else if (op == 3) {
-                tc.nextLine();
                 new HandlerFile().listAllFoldersCreated();
 
             } else System.out.println("Invalid Option");
+
+            op=-1;
 
 
         } while (op != 0);
@@ -178,6 +177,25 @@ public class Main {
 
     }
 
+    public static MFileAnnotationTypeEnum checkType(){
+        System.out.println("[1] REMINDER \t\t[2] IMPORTANT \t\t [3] SIMPLE");
+        op = tc.nextInt();
+        if (op == 1) {
+            type =MFileAnnotationTypeEnum.REMINDER;
+        } else if (op == 2) {
+            type = MFileAnnotationTypeEnum.IMPORTANT;
+        } else if (op == 3) {
+            type = MFileAnnotationTypeEnum.SIMPLE;
+        }
+        else {
+            System.out.println("INVALID OPTION");
+            return checkType();
+        }
+
+        return type;
+
+    }
+
     public static void fileManager() {
         switch (op) {
 
@@ -187,27 +205,35 @@ public class Main {
                 content = tc.nextLine();
                 System.out.println("NAME FILE");
                 nameFile = tc.nextLine();
-                System.out.println("[1] REMINDER \t\t[2] IMPORTANT \t\t [3] SIMPLE");
-                op = tc.nextInt();
-                if (op == 1) {
-                    new HandlerFile(new MFile(content, nameFile, MFileAnnotationTypeEnum.REMINDER));
-                } else if (op == 2) {
-                    new HandlerFile(new MFile(content, nameFile, MFileAnnotationTypeEnum.IMPORTANT));
-                } else if (op == 3) {
-                    new HandlerFile(new MFile(content, nameFile, MFileAnnotationTypeEnum.SIMPLE));
-                } else System.out.println("INVALID OPTION");
 
+                type = checkType();
+                new HandlerFile(new MFile(content, nameFile, type));
             }
             case 2 -> {
-                System.out.println("dadas");
-            }
-            case 3 -> {
-                System.out.println("DIRECTORY");
+
+                System.out.println("DIRECTORY PATH");
                 directory = tc.nextLine();
                 System.out.println("NAME FILE");
                 nameFile = tc.nextLine();
-                System.out.println("[1] REMINDER \t\t[2] IMPORTANT \t\t [3] SIMPLE");
 
+                new HandlerFile().recoveryFile(directory, nameFile, type );
+
+            }
+
+            case 3 -> {
+                System.out.println("DIRECTORY PATH");
+                directory = tc.nextLine();
+                System.out.println("NAME FILE");
+                nameFile = tc.nextLine();
+                type = checkType();
+                new HandlerFile().removeFile(directory,nameFile, type);
+
+
+            }
+            case 4 -> {
+                System.out.println("DIRECTORY PATH");
+                directory = tc.nextLine();
+                new HandlerFile().listAllFiles(directory);
             }
 
         }

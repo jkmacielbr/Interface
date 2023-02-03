@@ -23,15 +23,9 @@ public class MFile {
         return nameFile;
     }
 
-    public void setNameFile(String nameFile) {
-        this.nameFile = nameFile;
-    }
 
     public MFileAnnotationTypeEnum getType() {
         return type;
     }
 
-    public void setType(MFileAnnotationTypeEnum type) {
-        this.type = type;
-    }
 }

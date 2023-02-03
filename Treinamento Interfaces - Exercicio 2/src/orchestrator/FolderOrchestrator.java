@@ -21,10 +21,20 @@ public class FolderOrchestrator implements FolderManagement {
     }
     public void removeFolders(List<String>mFileListPath){
         for (String path: mFileListPath) {
-
             removeAFolder(path);
         }
 
+    }
+
+    public void delete(File file){
+        if(file.isDirectory()){
+            file.delete();
+        }else {
+            File [] files = file.listFiles();
+            for (int i = 0; i < files.length; i++){
+                delete(files[i]);
+            }
+        }
     }
 
     @Override
@@ -40,8 +50,10 @@ public class FolderOrchestrator implements FolderManagement {
 
     @Override
     public void removeAFolder(String path) {
-        file = new File(path);
-        file.delete();
+
+      file = new File(path);
+        delete(file);
+//        file.delete();
 
 
     }
@@ -53,10 +65,14 @@ public class FolderOrchestrator implements FolderManagement {
         file = new File(directory+"/");
         File [] aFile = file.listFiles();
         Arrays.sort(aFile);
+        if(file.isFile()){
         for (File listFile: aFile) {
-            System.out.println(listFile.getName());
+            if (listFile.isDirectory()) {
+                System.out.println(listFile.getName());
+            }
 
         }
+        } else System.out.println("NOT FOUND FOLDERS");
 
 
     }
