@@ -78,18 +78,16 @@ public class Main {
 
     public static void folderManager() {
 
-
-
         do {
             System.out.println("[1] CREATE FOLDER");
             System.out.println("[2] DELETE FOLDER");
             System.out.println("[3] LIST FOLDER");
-            System.out.println("[4] EXIT");
+            System.out.println("[0] EXIT");
             op = tc.nextInt();
 
             if (op == 1) {
                 do {
-
+                    tc.nextLine();
                     System.out.println("DIRECTORY PATH");
                     directory = tc.nextLine();
                     screenDirectory();
@@ -116,13 +114,12 @@ public class Main {
                     System.out.println("[1] DELETE FOLDER");
                     op = tc.nextInt();
                     if (op == 1) {
-
-                        System.out.println("DIRECTORY PATH");
                         tc.nextLine();
+                        System.out.println("DIRECTORY PATH");
+
                         directory = tc.nextLine();
                         mFileLista.add(directory);
                     }
-
 
                 } while (op != 0);
                 System.out.println(directory);
@@ -131,9 +128,10 @@ public class Main {
             } else if (op == 3) {
                 new HandlerFile().listAllFoldersCreated();
 
-            } else System.out.println("Invalid Option");
+            } else if(op != 0){
+                System.out.println("Invalid Option");
+            }
 
-            op=-1;
 
 
         } while (op != 0);
@@ -165,6 +163,13 @@ public class Main {
                 System.out.println("DIRECTORY PATH");
                 directory = tc.nextLine();
                 new HandlerFile().listAllImageFiles(directory);
+            } else if (op == 4) {
+                tc.nextLine();
+                System.out.println("DIRECTORY IMAGE");
+                directory = tc.nextLine();
+                System.out.println("NAME IMAGE");
+                nameImage = tc.nextLine();
+                new HandlerFile().recoveryImageFile(directory, nameFile);
             }
 
             System.out.println("[0] EXIT");

@@ -116,7 +116,14 @@ public class FileOrchestrator extends FolderOrchestrator implements ImageFileDat
     }
 
     @Override
-    public void recoveryImageFile(String directory) {
+    public void recoveryImageFile(String directory, String nameFile) {
+        directory +="/image/"+nameFile;
+        file = new File(directory);
+
+        if (file.isFile()){
+            System.out.println(file.getName());
+
+        }
 
 
     }

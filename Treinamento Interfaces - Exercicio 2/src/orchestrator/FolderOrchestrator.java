@@ -28,32 +28,27 @@ public class FolderOrchestrator implements FolderManagement {
 
     public void delete(File file){
         if(file.isDirectory()){
-            file.delete();
-        }else {
             File [] files = file.listFiles();
-            for (int i = 0; i < files.length; i++){
-                delete(files[i]);
+            for (File filelist : files){
+                delete(filelist);
             }
-        }
+        } file.delete();
     }
 
     @Override
     public void createAFolder(String path) {
         file = new File(path);
 
-
         if (!file.exists()) {
             file.mkdirs();
-        } else System.out.println("FOLDER EXISTS");
+        }
 
     }
 
     @Override
     public void removeAFolder(String path) {
-
       file = new File(path);
         delete(file);
-//        file.delete();
 
 
     }
@@ -65,7 +60,7 @@ public class FolderOrchestrator implements FolderManagement {
         file = new File(directory+"/");
         File [] aFile = file.listFiles();
         Arrays.sort(aFile);
-        if(file.isFile()){
+        if(file.isDirectory()){
         for (File listFile: aFile) {
             if (listFile.isDirectory()) {
                 System.out.println(listFile.getName());

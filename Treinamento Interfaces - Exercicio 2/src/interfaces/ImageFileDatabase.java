@@ -8,7 +8,7 @@ public interface ImageFileDatabase {
 
     void removeImageFile(String directory, String nameFile);
 
-    void recoveryImageFile(String fileName);
+    void recoveryImageFile(String directory, String nameFile);
 
 
 
