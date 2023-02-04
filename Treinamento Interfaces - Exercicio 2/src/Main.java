@@ -1,105 +1,56 @@
 import model.MFile;
 import model.MFileAnnotationTypeEnum;
+import orchestrator.HandlerFile;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-    static List<String> mFileLista = new ArrayList();
+    static List<String> mFileLista = new ArrayList<>();
     static String directory, nameFile, content, nameImage;
     static MFileAnnotationTypeEnum type = null;
     static int op;
     static Scanner tc = new Scanner(System.in);
 
     public static void main(String[] args) {
-        screenMenu();
-        op = tc.nextInt();
+
+        int opMenu;
         do {
+            Screen.screenMenu();
+            opMenu = tc.nextInt();
             tc.nextLine();
 
-            switch (op) {
+            switch (opMenu) {
                 case 1 -> folderManager();
 
-
                 case 2 -> {
-                    screenImage();
+                    Screen.screenImage();
                     imageManager();
-
-
                 }
                 case 3 -> {
-                    screenFile();
-                    op = tc.nextInt();
+                    Screen.screenFile();
+                    opMenu = tc.nextInt();
                     tc.nextLine();
                     fileManager();
                 }
 
             }
-            screenMenu();
-            op = tc.nextInt();
 
-
-        } while (op != 0);
-
-
+        } while (opMenu != 0);
     }
 
-    public static void screenMenu() {
-        System.out.println("[1] DIRECTORY MANAGER");
-        System.out.println("[2] IMAGE MANAGER");
-        System.out.println("[3] FILE MANAGER");
-        System.out.println("[0] EXIT");
-
-    }
-
-    public static void screenImage() {
-        System.out.println("[1] SAVE IMAGE");
-        System.out.println("[2] DELETE IMAGE");
-        System.out.println("[3] LIST IMAGES");
-        System.out.println("[4] RECOVERY IMAGE");
-        System.out.println("[0] EXIT");
-    }
-
-    public static void screenFile() {
-        System.out.println("[1] SAVE FILE");
-        System.out.println("[2] RECOVERY FILE");
-        System.out.println("[3] REMOVE FILE");
-        System.out.println("[4] LIST FILES");
-        System.out.println("[0] EXIT");
-
-    }
-
-    public static void screenDirectory() {
-        System.out.println("[1] REMINDERS");
-        System.out.println("[2] IMPORTANT");
-        System.out.println("[3] IMAGE");
-    }
 
     public static void folderManager() {
 
         do {
-            System.out.println("[1] CREATE FOLDER");
-            System.out.println("[2] DELETE FOLDER");
-            System.out.println("[3] LIST FOLDER");
-            System.out.println("[0] EXIT");
+            Screen.screenFolder();
             op = tc.nextInt();
 
             if (op == 1) {
                 do {
                     tc.nextLine();
-                    System.out.println("DIRECTORY PATH");
-                    directory = tc.nextLine();
-                    screenDirectory();
-                    op = tc.nextInt();
-
-                    if (op == 1) directory += "/reminder";
-
-                    else if (op == 2) directory += "/important";
-
-                    else if (op == 3) directory += "/image";
-
-                    else System.out.println("Invalid Option");
+                    directory = new HandlerFile().typeDirectory();
 
                     mFileLista.add(directory);
                     System.out.println("[0] SAIR");
@@ -113,11 +64,11 @@ public class Main {
                     System.out.println("[0] SAIR");
                     System.out.println("[1] DELETE FOLDER");
                     op = tc.nextInt();
+
                     if (op == 1) {
                         tc.nextLine();
-                        System.out.println("DIRECTORY PATH");
+                        directory = new HandlerFile().typeDirectory();
 
-                        directory = tc.nextLine();
                         mFileLista.add(directory);
                     }
 
@@ -128,14 +79,11 @@ public class Main {
             } else if (op == 3) {
                 new HandlerFile().listAllFoldersCreated();
 
-            } else if(op != 0){
+            } else if (op != 0) {
                 System.out.println("Invalid Option");
             }
 
-
-
         } while (op != 0);
-
     }
 
     public static void imageManager() {
@@ -182,17 +130,16 @@ public class Main {
 
     }
 
-    public static MFileAnnotationTypeEnum checkType(){
+    public static MFileAnnotationTypeEnum checkType() {
         System.out.println("[1] REMINDER \t\t[2] IMPORTANT \t\t [3] SIMPLE");
         op = tc.nextInt();
         if (op == 1) {
-            type =MFileAnnotationTypeEnum.REMINDER;
+            type = MFileAnnotationTypeEnum.REMINDER;
         } else if (op == 2) {
             type = MFileAnnotationTypeEnum.IMPORTANT;
         } else if (op == 3) {
             type = MFileAnnotationTypeEnum.SIMPLE;
-        }
-        else {
+        } else {
             System.out.println("INVALID OPTION");
             return checkType();
         }
@@ -221,7 +168,7 @@ public class Main {
                 System.out.println("NAME FILE");
                 nameFile = tc.nextLine();
 
-                new HandlerFile().recoveryFile(directory, nameFile, type );
+                new HandlerFile().recoveryFile(directory, nameFile, type);
 
             }
 
@@ -231,7 +178,7 @@ public class Main {
                 System.out.println("NAME FILE");
                 nameFile = tc.nextLine();
                 type = checkType();
-                new HandlerFile().removeFile(directory,nameFile, type);
+                new HandlerFile().removeFile(directory, nameFile, type);
 
 
             }

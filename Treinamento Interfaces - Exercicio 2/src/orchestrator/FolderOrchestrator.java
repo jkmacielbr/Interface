@@ -20,7 +20,9 @@ public class FolderOrchestrator implements FolderManagement {
 
     }
     public void removeFolders(List<String>mFileListPath){
+
         for (String path: mFileListPath) {
+
             removeAFolder(path);
         }
 

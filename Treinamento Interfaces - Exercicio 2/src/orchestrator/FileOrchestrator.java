@@ -128,6 +128,7 @@ public class FileOrchestrator extends FolderOrchestrator implements ImageFileDat
 
     }
 
+
     @Override
     public void recoveryFile(String directory, String nameFile, MFileAnnotationTypeEnum type) {
 
