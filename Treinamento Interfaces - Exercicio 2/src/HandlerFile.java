@@ -1,8 +1,7 @@
 package orchestrator;
 
 import model.MFile;
-import model.MFileAnnotationTypeEnum;
-import orchestrator.FileOrchestrator;
+import model.MFileAnnotationType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +14,12 @@ public class HandlerFile extends FileOrchestrator {
     private List <MFile> mFileList = new ArrayList<>();
 
     public HandlerFile(MFile mFile) {
-        if (mFile.getType().equals(MFileAnnotationTypeEnum.IMAGE)){
+        if (mFile.getType().equals(MFileAnnotationType.IMAGE)){
             mFileList.add(mFile);
             saveAllListOfImagesFiles(mFileList);
 
-        } else if (mFile.getType().equals(MFileAnnotationTypeEnum.REMINDER) || mFile.getType().equals(MFileAnnotationTypeEnum.SIMPLE)
-                || mFile.getType().equals(MFileAnnotationTypeEnum.IMPORTANT)){
+        } else if (mFile.getType().equals(MFileAnnotationType.REMINDER) || mFile.getType().equals(MFileAnnotationType.SIMPLE)
+                || mFile.getType().equals(MFileAnnotationType.IMPORTANT)){
             mFileList.add(mFile);
             saveAllListOfFiles(mFileList);
         }
